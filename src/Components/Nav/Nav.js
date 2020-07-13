@@ -1,15 +1,38 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import './nav.css';
+import home from '../../logo/home.png';
+import post from '../../logo/post.png';
+import logout from '../../logo/logout.png';
 
 class Nav extends Component {
     render() {
+        console.log(this.props);
         return (
             <div className='nav-bar'>
-                <button>Home</button>
-                <button>New Post</button>
-                <button>Logout</button>
+                <section className='profile-container'>
+                    <div className='profile-pic' src={this.props.profilePic} alt='Profile Picture' ></div>
+                    <p>{this.props.username}</p>
+                </section>
+                <section className='nav-buttons'>
+                    <Link to='/dashboard'><img src={home} alt='dashboard' /></Link>
+                    <Link to='/new'><img src={post} alt='new post' /></Link>
+                </section>
+                <section className='logout-section'>
+                    <Link to='/'><img src={logout} alt='logout' /></Link>
+                </section>
+                
             </div>
         )
     }
 }
 
-export default Nav;
+function mapStateToProps(state) {
+    return {
+        username: state.username,
+        profilePic: state.profile_pic
+    };
+}
+
+export default connect(mapStateToProps)(Nav);

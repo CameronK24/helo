@@ -1,0 +1,52 @@
+.nav-bar {
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100vh;
+    position: fixed;
+    padding-top: 20px;
+    background-image: linear-gradient(#ff9770, #ff7abe);
+    box-shadow: 10px 0 20px 0 rgba(0,0,0,.1),5px 0 5px rgba(0,0,0,.2);
+}
+
+.profile-container {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.profile-pic {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    background-position: 50%;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #333;
+}
+
+.nav-buttons {
+    height: 120px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-buttons img {
+    width: 40px;
+}
+
+.logout-section {
+    position: absolute;
+    bottom: 40px;
+    left: 30px;
+}
+
+.logout-section img {
+    width: 40px;
+}
