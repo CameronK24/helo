@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const massive = require('massive');
 const authCtrl = require('./controllers/authController');
+const postCtrl = require('./controllers/postController');
 
 const {SERVER_PORT, DB_URI} = process.env;
 
@@ -19,6 +20,7 @@ massive({
 
 app.post('/auth/register', authCtrl.register);
 app.post('/auth/login', authCtrl.login);
+app.get('/api/posts/:id', postCtrl.getPosts);
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import logo from '../../logo/logo.png';
-import {Switch, Link, Redirect} from 'react-router-dom';
+import {Switch, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {storeUserInfo} from '../../redux/reducer';
 import axios from 'axios';
 import './auth.css';
 
@@ -38,6 +40,9 @@ class Auth extends Component {
         const body = {username: this.state.username, password: this.state.password};
         axios.post('/auth/login', body)
             .then(res => {
+                console.log(res.data);
+                const {user_id, username, profile_pic} = res.data;
+                this.props.storeUserInfo(user_id, username, profile_pic);
                 this.setState({username: '', password: '', loggedIn: true});
             })
             .catch(err => {
@@ -80,4 +85,4 @@ class Auth extends Component {
     }
 }
 
-export default Auth;
+export default connect(null, {storeUserInfo})(Auth);

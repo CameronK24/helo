@@ -41,11 +41,5 @@ h1 {
     justify-content: space-around;
 }
 
-.dark-btn {
-    border-radius: 1px;
-    color: white;
-    background-image: radial-gradient(circle at 50% -46%, #737373, #403d39);
-    padding: 10px 20px;
-    border: none;
-}
+
 

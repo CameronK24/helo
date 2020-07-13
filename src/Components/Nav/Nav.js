@@ -12,7 +12,7 @@ class Nav extends Component {
         return (
             <div className='nav-bar'>
                 <section className='profile-container'>
-                    <div className='profile-pic' src={this.props.profilePic} alt='Profile Picture' ></div>
+                    <div className='profile-pic' style={{backgroundImage: `url(${this.props.profilePic})`}} ></div>
                     <p>{this.props.username}</p>
                 </section>
                 <section className='nav-buttons'>
@@ -30,6 +30,7 @@ class Nav extends Component {
 
 function mapStateToProps(state) {
     return {
+        userId: state.user_id,
         username: state.username,
         profilePic: state.profile_pic
     };
