@@ -21,6 +21,7 @@ massive({
 app.post('/auth/register', authCtrl.register);
 app.post('/auth/login', authCtrl.login);
 app.get('/api/posts/:id', postCtrl.getPosts);
+app.get('/api/post/:id', postCtrl.getSinglePost);
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 

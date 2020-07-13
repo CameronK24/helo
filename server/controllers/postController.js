@@ -41,8 +41,8 @@ module.exports = {
     },
     getSinglePost: async (req, res) => {
         const {id} = req.params;
-
         const db = req.app.get('db');
-        
+        const post = await db.get_single_post([id])
+        res.status(200).send(post);
     }
 }
