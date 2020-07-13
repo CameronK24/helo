@@ -17,5 +17,5 @@ massive({
     console.log('DB is connected');
 }).catch(err => console.log(err));
 
-app.listen(4040, () => console.log(`Listening on port 4040`));
+app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 
