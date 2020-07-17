@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import search from '../../logo/search.png';
 import './dashboard.css';
@@ -21,9 +20,8 @@ class Dashboard extends Component {
     }
 
     getPosts = () => {
-        const {userId} = this.props;
         const {checkBox, search} = this.state;
-        axios.get(`/api/posts/${userId}/?userposts=${checkBox}&search=${search}`)
+        axios.get(`/api/posts?userposts=${checkBox}&search=${search}`)
             .then(res => {
                 this.setState({posts: res.data});
                 // console.log(this.state.posts);
@@ -84,10 +82,4 @@ class Dashboard extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        userId: state.user_id
-    };
-}
-
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

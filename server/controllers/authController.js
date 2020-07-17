@@ -15,6 +15,8 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt);
         const registerUser = await db.register_user([username, hash, profilePic]);
         const user = registerUser[0];
+        // console.log(user);
+        req.session.userid = user.user_id
         return res.status(201).send(user);
     },
     login: async (req, res) => {
@@ -29,6 +31,22 @@ module.exports = {
         if (!isAuthenticated) {
             return res.status(403).send('Incorrect password');
         }
+        // console.log(existingUser);
+        req.session.userid = existingUser.user_id;
         return res.status(200).send(existingUser);
+    },
+    logout: (req, res) => {
+        req.session.destroy();
+        return res.sendStatus(200);
+    },
+    loggedInUser: (req, res) => {
+        const userid = req.session.userid;
+        const db = req.app.get('db');
+        db.get_current_user([userid])
+            .then(user => {
+                // console.log(user[0]);
+                res.status(200).send(user[0]);
+            })
+            .catch(err => res.status(500).send(err));
     }
 }

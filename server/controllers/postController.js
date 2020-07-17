@@ -3,7 +3,8 @@ const { response } = require("express");
 module.exports = {
     getPosts: async (req, res) => {
         const {userposts, search} = req.query;
-        const {id} = req.params;
+        const userid = req.session.userid;
+        // console.log(userid);
         // console.log(userposts);
         // console.log(search);
         const db = req.app.get('db');
@@ -20,7 +21,7 @@ module.exports = {
         }  
         else if (userposts === 'false' && search === '') {
             for (let x = 0; x < allPosts.length; x++) {
-                if (+id !== allPosts[x].user_id) {
+                if (userid !== allPosts[x].user_id) {
                     // console.log('basbab');
                     posts.push(allPosts[x]);
                 }
@@ -28,7 +29,7 @@ module.exports = {
         }
         else if (userposts === 'false' && search !== '') {
             for (let x = 0; x < allPosts.length; x++) {
-                if (+id !== allPosts[x].user_id && allPosts[x].title.includes(search)) {
+                if (userid !== allPosts[x].user_id && allPosts[x].title.includes(search)) {
                     // console.log('in here');
                     posts.push(allPosts[x]);
                 }
@@ -48,12 +49,12 @@ module.exports = {
         res.status(200).send(post);
     },
     createNewPost: (req, res) => {
-        const {id} = req.params;
+        const userid = req.session.userid;
         const {title, image, content} = req.body;
         // console.log(id, title, image, content);
         const db = req.app.get('db');
 
-        db.add_new_post([id, title, image, content])
+        db.add_new_post([userid, title, image, content])
             .then(() => {
                 res.sendStatus(200);
             })

@@ -1,14 +1,40 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import axios from 'axios';
 import './nav.css';
+import {storeUserInfo, removeUserInfo} from '../../redux/reducer';
 import home from '../../logo/home.png';
 import post from '../../logo/post.png';
 import logout from '../../logo/logout.png';
 
 class Nav extends Component {
+
+    componentDidMount() {
+        this.getCurrentUser();
+    }
+
+    getCurrentUser = () => {
+        axios.get('/api/auth/me')
+            .then(res => {
+                // console.log(res.data);
+                const {username, profile_pic} = res.data;
+                // console.log(username, profile_pic);
+                this.props.storeUserInfo(username, profile_pic);
+            })
+            .catch(err => console.log(err));
+    }
+
+    logout = () => {
+        axios.post('/auth/logout')
+            .then(res => {
+                this.props.removeUserInfo();
+            })
+            .catch(err => console.log(err))
+    }
+
     render() {
-        // console.log(this.props);
+        // console.log(this.props.profilePic);
         return (
             <div className='nav-bar'>
                 <section className='profile-container'>
@@ -20,7 +46,7 @@ class Nav extends Component {
                     <Link to='/new'><img src={post} alt='new post' /></Link>
                 </section>
                 <section className='logout-section'>
-                    <Link to='/'><img src={logout} alt='logout' /></Link>
+                    <Link to='/'><img src={logout} alt='logout' onClick={this.logout} /></Link>
                 </section>
                 
             </div>
@@ -30,10 +56,9 @@ class Nav extends Component {
 
 function mapStateToProps(state) {
     return {
-        userId: state.user_id,
         username: state.username,
         profilePic: state.profile_pic
     };
 }
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps, {storeUserInfo, removeUserInfo})(Nav);

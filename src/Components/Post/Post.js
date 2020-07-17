@@ -13,7 +13,6 @@ class Post extends Component {
             content: '',
             username: '',
             profilePic: '',
-            user_id: null,
             redirect: false
         }
     }
@@ -57,7 +56,7 @@ class Post extends Component {
                             <img src={this.state.image} alt='content' />
                             <p>{this.state.content}</p>
                         </section>
-                        {this.state.user_id === this.props.userId
+                        {this.state.username === this.props.username
                         ? <button className='dark-btn' onClick={this.deleteMyPost} >Delete Post</button>
                         : null
                         }
@@ -73,7 +72,7 @@ class Post extends Component {
 
 function mapStateToProps(state) {
     return {
-        userId: state.user_id
+        username: state.username
     };
 }
 

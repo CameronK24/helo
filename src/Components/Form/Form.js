@@ -29,16 +29,13 @@ class Form extends Component {
 
     createPost = () => {
         const body = {...this.state}
-        const {userId} = this.props;
-        console.log(userId);
-        if (userId !== null) {
-            axios.post(`/api/newpost/${userId}`, body)
-                .then(res => {
-                    this.setState({title: '', image: '', content: '', created: true});
-                    console.log('mememem');
-                })
-                .catch(err => console.log(err));
-        }
+        axios.post(`/api/newpost`, body)
+            .then(res => {
+                this.setState({title: '', image: '', content: '', created: true});
+                console.log('mememem');
+            })
+            .catch(err => console.log(err));
+        
     }
 
     render() {
@@ -72,10 +69,4 @@ class Form extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        userId: state.user_id
-    };
-}
-
-export default connect(mapStateToProps)(Form);
+export default Form;
