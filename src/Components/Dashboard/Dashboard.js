@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import search from '../../logo/search.png';
 import './dashboard.css';
 import axios from 'axios';
@@ -25,7 +26,7 @@ class Dashboard extends Component {
         axios.get(`/api/posts/${userId}/?userposts=${checkBox}&search=${search}`)
             .then(res => {
                 this.setState({posts: res.data});
-                console.log(this.state.posts);
+                // console.log(this.state.posts);
             })
             .catch(err => console.log(err));
     }
@@ -45,21 +46,20 @@ class Dashboard extends Component {
 
     render() {
         const mappedPosts = this.state.posts.map((post, index) => (
-            <div className='mapped-post' key={index} >
+            <Link to={`/post/${post.post_id}`}><div className='mapped-post' key={index} >
                 <h2>{post.title} </h2>
                 <div className='author-box'>
                     <p>by {post.username}</p>
-                    <img src={post.profile_pic} alt='profile picture' />
+                    <img src={post.profile_pic} alt='author' />
                 </div>
-            </div>
+            </div></Link>
         ))
-        console.log(mappedPosts);
         return (
             <div className='dashboard-view'>
                 <section className='search-box'>
                     <div className='search-bar'>
                         <input placeholder='Search by Title' value={this.state.search} onChange={e => this.searchInput(e.target.value)} />
-                        <img src={search} onClick={this.getPosts} />
+                        <img src={search} onClick={this.getPosts} alt='search' />
                         <button className='dark-btn' onClick={this.resetSearch} >Reset</button>
                     </div>
                     <div className='check-box'>

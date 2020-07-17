@@ -1,0 +1,59 @@
+.single-post {
+    width: 70%;
+    max-height: 400px;
+    margin: 50px auto;
+    background-color: white;
+    border-radius: 2px;
+    padding: 20px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.2);
+}
+
+.title-author {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-author {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 30%;
+}
+
+.post-author img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0,0,0,.4);
+    margin: 0 5px;
+}
+
+.post-content {
+    margin: 10px 0 0;
+    height: 300px;
+}
+
+.post-content img {
+    background-image: url('https://www.sbdcnet.org/wp-content/themes/consultix/images/no-image-found-360x250.png');
+    border-radius: 2px;
+    width: 50%;
+    height: 300px;
+    background-position: 50%;
+    background-size: cover;
+    margin: 0 15px 0 0;
+    float: left;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.2);
+    background-color: white;
+}
+
+.post-content p {
+    word-wrap: break-word;
+    text-indent: 25px;
+    line-height: 30px;
+}
+
+.single-post button {
+    position: relative;
+    left: 88%;
+    margin-top: 12.5px;
+}

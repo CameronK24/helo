@@ -40,7 +40,6 @@ class Auth extends Component {
         const body = {username: this.state.username, password: this.state.password};
         axios.post('/auth/login', body)
             .then(res => {
-                console.log(res.data);
                 const {user_id, username, profile_pic} = res.data;
                 this.props.storeUserInfo(user_id, username, profile_pic);
                 this.setState({username: '', password: '', loggedIn: true});

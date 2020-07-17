@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 module.exports = {
     getPosts: async (req, res) => {
         const {userposts, search} = req.query;
@@ -36,7 +38,7 @@ module.exports = {
             // console.log('last boy');
             posts = allPosts;
         }
-        console.log(posts);
+        // console.log(posts);
         res.status(200).send(posts);
     },
     getSinglePost: async (req, res) => {
@@ -44,5 +46,23 @@ module.exports = {
         const db = req.app.get('db');
         const post = await db.get_single_post([id])
         res.status(200).send(post);
+    },
+    createNewPost: (req, res) => {
+        const {id} = req.params;
+        const {title, image, content} = req.body;
+        // console.log(id, title, image, content);
+        const db = req.app.get('db');
+
+        db.add_new_post([id, title, image, content])
+            .then(() => {
+                res.sendStatus(200);
+            })
+            .catch(err => res.status(400).send(err));
+    },
+    deletePost: (req, res) => {
+        const {id} = req.params;
+        const db = req.app.get('db');
+
+        
     }
 }
