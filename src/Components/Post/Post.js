@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import './post.css';
 
@@ -12,11 +13,13 @@ class Post extends Component {
             content: '',
             username: '',
             profilePic: '',
-            user_id: null
+            user_id: null,
+            redirect: false
         }
     }
 
     componentDidMount() {
+        this.setState({redirect: false});
         this.getPostInfo();
     }
 
@@ -25,32 +28,45 @@ class Post extends Component {
         axios.get(`/api/post/${postid}`)
             .then(res => {
                 const {username, profile_pic, title, image, content, user_id} = res.data[0];
-                console.log(res.data);
+                // console.log(res.data);
                 this.setState({title: title, image: image, content: content, username: username, profilePic: profile_pic, user_id: user_id});
             })
             .catch(err => console.log(err));
     }
 
+    deleteMyPost = () => {
+        this.props.location.deletePostFn(this.props.match.params);
+        this.setState({redirect: true});
+    }
+
     render() {
+        // console.log(this.props.location.deletePostFn);
         return (
-            <div className='single-post'>
-                <section className='title-author'>
-                    <h3>{this.state.title}</h3>
-                    <div className='post-author'>
-                        <p>by {this.state.username}</p>
-                        <img src={this.state.profilePic} alt='author' />
+            <Switch>
+                {this.state.redirect !== true
+                ?
+                    <div className='single-post'>
+                        <section className='title-author'>
+                            <h3>{this.state.title}</h3>
+                            <div className='post-author'>
+                                <p>by {this.state.username}</p>
+                                <img src={this.state.profilePic} alt='author' />
+                            </div>
+                        </section>
+                        <section className='post-content'>
+                            <img src={this.state.image} alt='content' />
+                            <p>{this.state.content}</p>
+                        </section>
+                        {this.state.user_id === this.props.userId
+                        ? <button className='dark-btn' onClick={this.deleteMyPost} >Delete Post</button>
+                        : null
+                        }
+                    
                     </div>
-                </section>
-                <section className='post-content'>
-                    <img src={this.state.image} alt='content' />
-                    <p>{this.state.content}</p>
-                </section>
-                {this.state.user_id === this.props.userId
-                ? <button className='dark-btn'>Delete Post</button>
-                : null
+                : <Redirect to='/dashboard'/>
                 }
                 
-            </div>
+            </Switch>
         )
     }
 }

@@ -12,7 +12,7 @@ class Dashboard extends Component {
         this.state = {
             search: '',
             checkBox: true,
-            posts: []
+            posts: [],
         }
     }
     
@@ -44,9 +44,18 @@ class Dashboard extends Component {
         this.setState({checkBox: !this.state.checkBox})
     }
 
+    deletePost = (postId) => {
+        const {postid} = postId 
+        axios.delete(`/api/deletepost/${postid}`)
+            .then(res => {
+                this.setState({posts: res.data});
+            })
+            .catch(err => console.log(err));
+    }
+
     render() {
         const mappedPosts = this.state.posts.map((post, index) => (
-            <Link to={`/post/${post.post_id}`}><div className='mapped-post' key={index} >
+            <Link to={{pathname: `/post/${post.post_id}`, deletePostFn: this.deletePost}}><div className='mapped-post' key={index} >
                 <h2>{post.title} </h2>
                 <div className='author-box'>
                     <p>by {post.username}</p>

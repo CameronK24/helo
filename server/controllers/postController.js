@@ -63,6 +63,14 @@ module.exports = {
         const {id} = req.params;
         const db = req.app.get('db');
 
-        
+        db.delete_post([id])
+            .then(() => {
+                db.get_posts()
+                    .then(posts => {
+                        res.status(200).send(posts);
+                    })
+                    .catch(err => res.status(500).send(err));
+            })
+            .catch(err => res.status(500).send(err));
     }
 }
